@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WasteFlow — Sonderabfall digital erfassen, etikettieren, melden</title>
+  <meta name="description" content="WasteFlow digitalisiert die Sonderabfall-Entsorgung: Erfassung am Anfallort, QR-Etikett, Scan-Übergabe, Register und Behörden-Meldung. VeVA/eANV-konform, dreisprachig." />
+  <style>
+    :root{
+      --teal:#0f766e; --teal-dark:#0b3b34; --teal-soft:#e1f5ee;
+      --bg:#f8fafc; --card:#ffffff; --border:#e2e8f0; --text:#0f172a; --muted:#64748b;
+      --maxw:1080px;
+    }
+    *{box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; color:var(--text); background:var(--bg); line-height:1.6;}
+    a{color:inherit; text-decoration:none;}
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:0 20px;}
+
+    /* Nav */
+    header.nav{position:sticky; top:0; z-index:20; background:rgba(248,250,252,.9); backdrop-filter:blur(8px); border-bottom:1px solid var(--border);}
+    .nav-in{display:flex; align-items:center; justify-content:space-between; height:62px;}
+    .brand{display:flex; align-items:center; gap:8px; font-weight:800; font-size:19px; color:var(--teal-dark);}
+    .nav-links{display:flex; align-items:center; gap:22px; font-size:14px; color:var(--muted);}
+    .nav-links a:hover{color:var(--text);}
+    .btn{display:inline-flex; align-items:center; gap:8px; border-radius:10px; padding:11px 18px; font-size:14px; font-weight:600; cursor:pointer; border:1.5px solid transparent; white-space:nowrap;}
+    .btn.primary{background:var(--teal); color:#fff;}
+    .btn.primary:hover{background:var(--teal-dark);}
+    .btn.ghost{background:#fff; color:var(--teal); border-color:var(--teal);}
+    .btn.ghost:hover{background:var(--teal-soft);}
+    @media(max-width:720px){ .nav-links a.hide-m{display:none;} }
+
+    /* Hero */
+    .hero{text-align:center; padding:64px 0 40px;}
+    .pill{display:inline-flex; align-items:center; gap:7px; font-size:13px; font-weight:600; color:#085041; background:var(--teal-soft); padding:6px 14px; border-radius:999px; margin-bottom:20px;}
+    .hero h1{font-size:42px; line-height:1.15; margin:0 auto 16px; max-width:760px; letter-spacing:-.02em;}
+    .hero p.sub{font-size:18px; color:var(--muted); max-width:600px; margin:0 auto 28px;}
+    .cta-row{display:flex; gap:12px; justify-content:center; flex-wrap:wrap;}
+    @media(max-width:720px){ .hero h1{font-size:32px;} }
+
+    .trust{display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin-top:34px; font-size:14px; color:var(--muted);}
+    .trust span{display:inline-flex; align-items:center; gap:7px;}
+    .dot{width:7px; height:7px; border-radius:50%; background:var(--teal);}
+
+    section{padding:52px 0;}
+    .eyebrow{text-align:center; font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--teal); margin-bottom:10px;}
+    h2.sec{text-align:center; font-size:30px; margin:0 0 8px; letter-spacing:-.01em;}
+    p.lead{text-align:center; color:var(--muted); max-width:560px; margin:0 auto 36px; font-size:16px;}
+
+    .grid{display:grid; gap:18px;}
+    .g3{grid-template-columns:repeat(3,1fr);} .g4{grid-template-columns:repeat(4,1fr);} .g2{grid-template-columns:repeat(2,1fr);}
+    @media(max-width:860px){ .g3,.g4,.g2{grid-template-columns:1fr 1fr;} }
+    @media(max-width:560px){ .g3,.g4,.g2{grid-template-columns:1fr;} }
+
+    .card{background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px;}
+    .ico{width:46px; height:46px; border-radius:12px; background:var(--teal-soft); display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:14px;}
+    .card h3{margin:0 0 6px; font-size:17px;}
+    .card p{margin:0; color:var(--muted); font-size:14px;}
+
+    .step .n{font-size:13px; font-weight:700; color:#5DCAA5;}
+    .step h3{margin:6px 0 6px;}
+
+    /* Plattform split */
+    .plat{background:var(--teal-dark); color:#cbeadf; border-radius:20px; padding:38px;}
+    .plat h2{color:#fff; text-align:center; margin:0 0 6px; font-size:28px;}
+    .plat .lead{color:#9fd8c8;}
+    .plat .card{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); color:#eafaf4;}
+    .plat .card h3{color:#fff;} .plat .card p{color:#bfe3d8;}
+    .plat .ico{background:rgba(255,255,255,.1);}
+
+    /* Demo access */
+    .demo{background:#fff; border:1px solid var(--border); border-radius:20px; padding:32px;}
+    table.creds{width:100%; border-collapse:collapse; font-size:14px; margin-top:8px;}
+    table.creds th{text-align:left; color:var(--muted); font-weight:600; padding:10px 12px; border-bottom:1px solid var(--border); font-size:12px;}
+    table.creds td{padding:11px 12px; border-bottom:1px solid var(--border);}
+    table.creds tr:last-child td{border-bottom:none;}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:13px; background:#f1f5f9; padding:2px 7px; border-radius:6px;}
+
+    footer{border-top:1px solid var(--border); padding:30px 0; text-align:center; color:var(--muted); font-size:13px;}
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-in">
+      <div class="brand">♻️ WasteFlow</div>
+      <nav class="nav-links">
+        <a href="#funktionen" class="hide-m">Funktionen</a>
+        <a href="#ablauf" class="hide-m">Ablauf</a>
+        <a href="#demo" class="hide-m">Demo</a>
+        <a id="nav-demo" class="btn primary" href="#demo">Live-Demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- Hero -->
+    <section class="hero">
+      <span class="pill">♻️ Sonderabfall · digital</span>
+      <h1>Von der Erfassung bis zur Behörden-Meldung — in einem Fluss.</h1>
+      <p class="sub">WasteFlow digitalisiert die Sonderabfall-Entsorgung: erfassen am Anfallort, QR-Etikett, Scan-Übergabe, lückenloses Register und periodische Meldung. Mobile-first, dreisprachig, VeVA/eANV-konform.</p>
+      <div class="cta-row">
+        <a id="cta-app" class="btn primary" href="#">▶ Live-Demo öffnen</a>
+        <a id="cta-console" class="btn ghost" href="#">Betreiber-Konsole</a>
+      </div>
+      <div class="trust">
+        <span><span class="dot"></span> CH · VeVA</span>
+        <span><span class="dot"></span> DE · eANV</span>
+        <span><span class="dot"></span> DE / FR / IT</span>
+        <span><span class="dot"></span> Mehrbenutzer & Mandanten</span>
+      </div>
+    </section>
+
+    <!-- Funktionen -->
+    <section id="funktionen">
+      <div class="eyebrow">Was wir bieten</div>
+      <h2 class="sec">Der ganze Entsorgungs-Lebenszyklus</h2>
+      <p class="lead">Kein Papier, kein Abtippen, keine Medienbrüche — vom Gebinde bis zum Behörden-Export.</p>
+      <div class="grid g3">
+        <div class="card"><div class="ico">📱</div><h3>Mobile Erfassung</h3><p>Gebinde direkt am Anfallort anlegen — mit Foto, Standort und Mengen aus dem Abfallkatalog.</p></div>
+        <div class="card"><div class="ico">🏷️</div><h3>QR-Etikett</h3><p>Normgerechtes, dreisprachiges Gefahrgut-Etikett auf Knopfdruck — mit QR-Code.</p></div>
+        <div class="card"><div class="ico">📷</div><h3>Scan-Übergabe</h3><p>Übergabe an Transporteur und Entsorger per Scan statt Abtippen — fehlerfrei.</p></div>
+        <div class="card"><div class="ico">📋</div><h3>Register & Begleitscheine</h3><p>Lückenloses Archiv mit Begleitschein-PDFs, Status und Export (CSV/JSON).</p></div>
+        <div class="card"><div class="ico">📊</div><h3>Melde-Helfer</h3><p>Periodische Abfallmeldung pro Code vorbereitet — quartals- oder jahresweise.</p></div>
+        <div class="card"><div class="ico">🛡️</div><h3>Compliance-Profile</h3><p>Länderspezifika hinter VeVA/eANV-Adaptern — Pflichtfelder und Schwellen zentral.</p></div>
+      </div>
+    </section>
+
+    <!-- Ablauf -->
+    <section id="ablauf">
+      <div class="eyebrow">Wie es funktioniert</div>
+      <h2 class="sec">In vier Schritten</h2>
+      <p class="lead">So sieht der Alltag eines Betriebs mit WasteFlow aus.</p>
+      <div class="grid g4">
+        <div class="card step"><div class="n">Schritt 1</div><div class="ico">➕</div><h3>Erfassen</h3><p>Abfall am Anfallort anlegen — Vorlage wählen, Menge erfassen, fertig.</p></div>
+        <div class="card step"><div class="n">Schritt 2</div><div class="ico">🏷️</div><h3>Etikettieren</h3><p>QR-Etikett drucken und aufs Gebinde kleben.</p></div>
+        <div class="card step"><div class="n">Schritt 3</div><div class="ico">🔄</div><h3>Übergeben</h3><p>Beim Abholen scannen — Transport und Annahme werden bestätigt.</p></div>
+        <div class="card step"><div class="n">Schritt 4</div><div class="ico">📄</div><h3>Melden</h3><p>Register führt sich selbst; Meldung und Export auf Knopfdruck.</p></div>
+      </div>
+    </section>
+
+    <!-- Plattformen -->
+    <section>
+      <div class="plat">
+        <h2>Zwei Plattformen, ein System</h2>
+        <p class="lead">Getrennte Identitäten — der Kundenbetrieb und ihr als Betreiber.</p>
+        <div class="grid g2">
+          <div class="card"><div class="ico">👥</div><h3>Kunden-App</h3><p>Für Betriebe: erfassen, etikettieren, übergeben, melden — plus Partner-Portale für Transporteur und Entsorger.</p></div>
+          <div class="card"><div class="ico">🏢</div><h3>Betreiber-Konsole</h3><p>Für euch: alle Mandanten, Onboarding, Compliance-Profile, Abrechnung, Audit-Log und Support-Zugriff.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Demo -->
+    <section id="demo">
+      <div class="demo">
+        <div class="eyebrow" style="text-align:left">Jetzt ausprobieren</div>
+        <h2 class="sec" style="text-align:left; margin-bottom:4px">Live-Demo mit Test-Zugängen</h2>
+        <p style="color:var(--muted); margin:0 0 18px; max-width:620px;">Beide Plattformen mit fertig befüllten Demo-Daten. Einfach öffnen und einloggen.</p>
+        <div class="cta-row" style="justify-content:flex-start; margin-bottom:22px;">
+          <a id="cta-app2" class="btn primary" href="#">▶ Kunden-App öffnen</a>
+          <a id="cta-console2" class="btn ghost" href="#">Betreiber-Konsole öffnen</a>
+        </div>
+        <table class="creds">
+          <thead><tr><th>Plattform / Rolle</th><th>E-Mail</th><th>Passwort</th></tr></thead>
+          <tbody>
+            <tr><td>Kunden-App · Erzeuger</td><td><code>erzeuger@demo.ch</code></td><td><code>demo1234</code></td></tr>
+            <tr><td>Kunden-App · Entsorger</td><td><code>entsorger@demo.ch</code></td><td><code>demo1234</code></td></tr>
+            <tr><td>Kunden-App · Beförderer</td><td><code>befoerderer@demo.ch</code></td><td><code>demo1234</code></td></tr>
+            <tr><td>Betreiber-Konsole</td><td><code>admin@wasteflow.app</code></td><td><code>admin1234</code></td></tr>
+          </tbody>
+        </table>
+        <p style="color:var(--muted); font-size:13px; margin:16px 0 0;">Hinweis: Die Demo läuft auf einem Gratis-Hosting und „schläft" bei Inaktivität — der erste Aufruf kann 30–50 Sekunden dauern.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">♻️ WasteFlow — Sonderabfall digital. &nbsp;·&nbsp; Demo-Umgebung, keine Echtdaten.</div>
+  </footer>
+
+  <script>
+    // Ziel-URLs der Demo. Bei abweichenden Render-Namen hier anpassen.
+    var APP_URL = "https://wasteflow-frontend.onrender.com";
+    var CONSOLE_URL = "https://wasteflow-console.onrender.com";
+    ["cta-app","cta-app2","nav-demo"].forEach(function(id){ var e=document.getElementById(id); if(e && id!=="nav-demo") e.href=APP_URL; });
+    document.getElementById("cta-app").href = APP_URL;
+    document.getElementById("cta-app2").href = APP_URL;
+    document.getElementById("cta-console").href = CONSOLE_URL;
+    document.getElementById("cta-console2").href = CONSOLE_URL;
+  </script>
+</body>
+</html>
