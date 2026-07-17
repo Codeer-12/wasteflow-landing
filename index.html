@@ -301,21 +301,12 @@
     <!-- Demo -->
     <section id="demo">
       <div class="demo">
-        <div class="eyebrow" style="text-align:left">Selbst ausprobieren</div>
-        <h2 class="sec" style="text-align:left; margin-bottom:4px">Live-Demo — alle drei Rollen</h2>
-        <p style="color:var(--muted); margin:0 0 18px; max-width:640px;">Fertig befüllte Demo-Umgebung: erfassen Sie ein Gebinde als Erzeuger, bestätigen Sie den Transport als Beförderer, nehmen Sie es als Entsorger an.</p>
-        <div class="cta-row" style="justify-content:flex-start; margin-bottom:22px;">
-          <a id="cta-app" class="btn primary" href="#">Demo öffnen<svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <div class="eyebrow" style="text-align:left">Live-Demo</div>
+        <h2 class="sec" style="text-align:left; margin-bottom:4px">Demo kommt bald</h2>
+        <p style="color:var(--muted); margin:0 0 18px; max-width:640px;">Wir bereiten die interaktive Demo-Umgebung (alle drei Rollen: Erzeuger, Beförderer, Entsorger) gerade vor. Möchten Sie WasteFlow vorab sehen? Vereinbaren Sie ein kurzes Gespräch — wir zeigen es Ihnen persönlich.</p>
+        <div class="cta-row" style="justify-content:flex-start;">
+          <a id="cta-app" class="btn primary" href="#pilot">Persönliche Demo anfragen<svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
         </div>
-        <table class="creds">
-          <thead><tr><th>Rolle</th><th>E-Mail</th><th>Passwort</th></tr></thead>
-          <tbody>
-            <tr><td>Erzeuger</td><td><code>erzeuger@demo.ch</code></td><td><code>demo1234</code></td></tr>
-            <tr><td>Beförderer</td><td><code>befoerderer@demo.ch</code></td><td><code>demo1234</code></td></tr>
-            <tr><td>Entsorger</td><td><code>entsorger@demo.ch</code></td><td><code>demo1234</code></td></tr>
-          </tbody>
-        </table>
-        <p style="color:var(--muted); font-size:13px; margin:14px 0 0;">Demo-Umgebung, keine Echtdaten. Der erste Aufruf kann 30–50&nbsp;Sekunden dauern (Demo-Hosting „wacht auf").</p>
       </div>
     </section>
 
@@ -347,8 +338,9 @@
   </footer>
 
   <script>
-    var APP_URL = "/app";
-    ["cta-try","cta-app","cta-free","nav-app"].forEach(function(id){
+    // Demo-App vorübergehend nicht verfügbar → CTAs führen zur "Demo kommt bald"-Sektion.
+    var APP_URL = "#demo";
+    ["cta-try","cta-free","nav-app"].forEach(function(id){
       var e = document.getElementById(id);
       if (e) e.href = APP_URL;
     });
